@@ -513,6 +513,17 @@ export default class ExpressionParser extends LValParser {
         this.unexpected(refShorthandDefaultPos.start);
       }
 
+      if (node.operator === "delete" && node.argument.maybeDeleteInfixBang) {
+        // delete x ! [i] := resolved.delete(i)
+        this.expectPlugin("infixBang");
+        const arg = node.argument;
+        delete arg.maybeDeleteInfixBang;
+        let deleteId = this.startNodeAtNode(node);
+        deleteId = this.createIdentifier(deleteId, "delete");
+        arg.callee.property = deleteId;
+        return arg;
+      }
+
       if (update) {
         this.checkLVal(node.argument, undefined, undefined, "prefix operation");
       } else if (this.state.strict && node.operator === "delete") {
@@ -550,7 +561,7 @@ export default class ExpressionParser extends LValParser {
     return expr;
   }
 
-  // Parse call, dot, and `[]`-subscript expressions.
+  // Parse call, dot, infix bang, and `[]`-subscript expressions.
 
   parseExprSubscripts(refShorthandDefaultPos: ?Pos): N.Expression {
     const startPos = this.state.start;
@@ -650,6 +661,93 @@ export default class ExpressionParser extends LValParser {
         node.optional = true;
         return this.finishNode(node, "OptionalMemberExpression");
       }
+    } else if (this.match(tt.bang)) {
+      if (this.hasPrecedingLineBreak()) {
+        // Newline with bang is never infix bang, always ASI with unary bang.
+        state.stop = true;
+        return base;
+      }
+
+      // Allow resolved objects followed by call or member.
+      this.expectPlugin("infixBang");
+      this.next();
+      const node = this.startNodeAt(startPos, startLoc);
+
+      // Do RESOLVER_CLASS.resolve(obj)
+      const RESOLVER = "resolve";
+      let resolver = this.startNodeAtNode(node);
+      resolver = this.createIdentifier(resolver, RESOLVER);
+
+      const RESOLVER_OBJECT =
+        this.getPluginOption("infixBang", "resolverObject") || "Promise";
+
+      let objectId = this.startNodeAtNode(node);
+      objectId = this.createIdentifier(objectId, RESOLVER_OBJECT);
+
+      // Create the member expression: RESOLVER_OBJECT.resolve
+      const member = this.startNodeAtNode(node);
+      member.object = objectId;
+      member.property = resolver;
+      member.computed = false;
+      resolver = this.finishNode(member, "MemberExpression");
+
+      // Create the resolver function call.
+      let resolved = this.startNodeAtNode(node);
+      resolved.callee = resolver;
+      resolved.arguments = [base];
+      resolved = this.finishNode(resolved, "CallExpression");
+
+      let method;
+      const args = [];
+      if (this.eat(tt.bracketL)) {
+        // x ! [i]...
+        // The first argument is always the computed expression.
+        args.push(this.parseExpression());
+        this.expect(tt.bracketR);
+      } else if (this.match(tt.parenL)) {
+        // x ! (y, z) := resolved.fcall(y, z)
+        // No arguments yet.
+      } else {
+        // Simple case: x ! p...
+        // First argument is stringified identifier.
+        const property = this.parseIdentifier();
+        let arg = this.startNodeAtNode(property);
+        arg.value = property.name;
+        arg = this.finishNode(arg, "StringLiteral");
+        args.push(arg);
+      }
+
+      if (this.eat(tt.parenL)) {
+        // x ! [i](y, z) := resolved.post(i, y, z)
+        // The rest of the arguments are in parens.
+        method = args.length === 0 ? "fcall" : "post";
+        args.push(...this.parseCallExpressionArguments(tt.parenR, false));
+      } else if (this.eat(tt.eq)) {
+        method = "put";
+        args.push(this.parseMaybeAssign());
+      } else {
+        // x ! [i] := resolved.get(i)
+        // Method may change to resolved.delete(i)
+        method = "get";
+      }
+
+      let callee = this.startNodeAtNode(node);
+      callee.object = resolved;
+      callee.property = this.createIdentifier(
+        this.startNodeAtNode(node),
+        method,
+      );
+      callee.computed = false;
+      callee = this.finishNode(callee, "MemberExpression");
+
+      // Create an InfixBang CallExpression.
+      const ibang = this.startNodeAtNode(node);
+      if (method === "get") {
+        ibang.maybeDeleteInfixBang = true;
+      }
+      ibang.callee = callee;
+      ibang.arguments = args;
+      return this.finishNode(ibang, "CallExpression");
     } else if (this.eat(tt.dot)) {
       const node = this.startNodeAt(startPos, startLoc);
       node.object = base;

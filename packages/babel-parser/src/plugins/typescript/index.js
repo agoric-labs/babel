@@ -370,8 +370,8 @@ export default (superClass: Class<Parser>): Class<Parser> =>
         ) {
           throw this.unexpected(
             pattern.start,
-            "Name in a signature must be an Identifier, ObjectPattern or ArrayPattern," +
-              `instead got ${pattern.type}`,
+            `Name in a signature must be an Identifier, \
+ObjectPattern or ArrayPattern, instead got ${pattern.type}`,
           );
         }
         return pattern;

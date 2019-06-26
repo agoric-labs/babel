@@ -705,8 +705,11 @@ export default class ExpressionParser extends LValParser {
         args.push(this.parseExpression());
         this.expect(tt.bracketR);
       } else if (this.match(tt.parenL)) {
-        // x ! (y, z) := resolved.fcall(y, z)
-        // No arguments yet.
+        // x ! (y, z) := resolved.post(undefined, [y, z])
+        // First argument is undefined.
+        let undef = this.startNodeAtNode(node);
+        undef = this.createIdentifier(undef, "undefined");
+        args.push(undef);
       } else {
         // Simple case: x ! p...
         // First argument is stringified identifier.
@@ -718,10 +721,13 @@ export default class ExpressionParser extends LValParser {
       }
 
       if (this.eat(tt.parenL)) {
-        // x ! [i](y, z) := resolved.post(i, y, z)
+        // x ! [i](y, z) := resolved.post(i, [y, z])
         // The rest of the arguments are in parens.
-        method = args.length === 0 ? "fcall" : "post";
-        args.push(...this.parseCallExpressionArguments(tt.parenR, false));
+        method = "post";
+        let expr = this.startNode();
+        expr.elements = this.parseCallExpressionArguments(tt.parenR, false);
+        expr = this.finishNode(expr, "ArrayExpression");
+        args.push(expr);
       } else if (this.eat(tt.eq)) {
         method = "put";
         args.push(this.parseMaybeAssign());

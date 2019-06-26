@@ -227,9 +227,9 @@
                   "value": "func1"
                 },
                 {
-                  "type": "Identifier",
+                  "type": "ArrayExpression",
                   "start": 23,
-                  "end": 27,
+                  "end": 34,
                   "loc": {
                     "start": {
                       "line": 1,
@@ -237,28 +237,45 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 27
-                    },
-                    "identifierName": "arg1"
+                      "column": 34
+                    }
                   },
-                  "name": "arg1"
-                },
-                {
-                  "type": "Identifier",
-                  "start": 29,
-                  "end": 33,
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 29
+                  "elements": [
+                    {
+                      "type": "Identifier",
+                      "start": 23,
+                      "end": 27,
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 23
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 27
+                        },
+                        "identifierName": "arg1"
+                      },
+                      "name": "arg1"
                     },
-                    "end": {
-                      "line": 1,
-                      "column": 33
-                    },
-                    "identifierName": "arg2"
-                  },
-                  "name": "arg2"
+                    {
+                      "type": "Identifier",
+                      "start": 29,
+                      "end": 33,
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 29
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 33
+                        },
+                        "identifierName": "arg2"
+                      },
+                      "name": "arg2"
+                    }
+                  ]
                 }
               ]
             }

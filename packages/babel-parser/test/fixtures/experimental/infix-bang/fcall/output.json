@@ -203,17 +203,34 @@
                       "line": 1,
                       "column": 29
                     },
-                    "identifierName": "fcall"
+                    "identifierName": "post"
                   },
-                  "name": "fcall"
+                  "name": "post"
                 },
                 "computed": false
               },
               "arguments": [
                 {
                   "type": "Identifier",
+                  "start": 9,
+                  "end": 16,
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 9
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 16
+                    },
+                    "identifierName": "undefined"
+                  },
+                  "name": "undefined"
+                },
+                {
+                  "type": "ArrayExpression",
                   "start": 18,
-                  "end": 22,
+                  "end": 29,
                   "loc": {
                     "start": {
                       "line": 1,
@@ -221,28 +238,45 @@
                     },
                     "end": {
                       "line": 1,
-                      "column": 22
-                    },
-                    "identifierName": "arg1"
+                      "column": 29
+                    }
                   },
-                  "name": "arg1"
-                },
-                {
-                  "type": "Identifier",
-                  "start": 24,
-                  "end": 28,
-                  "loc": {
-                    "start": {
-                      "line": 1,
-                      "column": 24
+                  "elements": [
+                    {
+                      "type": "Identifier",
+                      "start": 18,
+                      "end": 22,
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 18
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 22
+                        },
+                        "identifierName": "arg1"
+                      },
+                      "name": "arg1"
                     },
-                    "end": {
-                      "line": 1,
-                      "column": 28
-                    },
-                    "identifierName": "arg2"
-                  },
-                  "name": "arg2"
+                    {
+                      "type": "Identifier",
+                      "start": 24,
+                      "end": 28,
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 24
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 28
+                        },
+                        "identifierName": "arg2"
+                      },
+                      "name": "arg2"
+                    }
+                  ]
                 }
               ]
             }

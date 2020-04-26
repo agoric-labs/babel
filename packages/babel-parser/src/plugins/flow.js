@@ -2885,7 +2885,11 @@ export default (superClass: Class<Parser>): Class<Parser> =>
         // $FlowFixMe
         node.arguments = this.parseCallExpressionArguments(tt.parenR, false);
         node.optional = true;
-        return this.finishCallExpression(node, /* optional */ true);
+        return this.finishCallExpression(
+          node,
+          /* optional */ true,
+          /* eventual */ false,
+        );
       } else if (
         !noCalls &&
         this.shouldParseTypes() &&
@@ -2902,6 +2906,7 @@ export default (superClass: Class<Parser>): Class<Parser> =>
           return this.finishCallExpression(
             node,
             subscriptState.optionalChainMember,
+            subscriptState.eventualMember,
           );
         });
 

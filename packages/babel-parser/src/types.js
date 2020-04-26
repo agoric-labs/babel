@@ -1484,6 +1484,7 @@ export type Placeholder<N: PlaceholderTypes> = NodeBase & {
 
 export type ParseSubscriptState = {
   optionalChainMember: boolean,
+  eventualMember: boolean,
   maybeAsyncArrow: boolean,
   stop: boolean,
 };

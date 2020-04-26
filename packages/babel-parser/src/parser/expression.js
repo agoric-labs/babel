@@ -556,6 +556,7 @@ export default class ExpressionParser extends LValParser {
   ): N.Expression {
     const state = {
       optionalChainMember: false,
+      eventualMember: false,
       maybeAsyncArrow: this.atPossibleAsyncArrow(base),
       stop: false,
     };
@@ -576,6 +577,7 @@ export default class ExpressionParser extends LValParser {
   /**
    * @param state Set 'state.stop = true' to indicate that we should stop parsing subscripts.
    *   state.optionalChainMember to indicate that the member is currently in OptionalChain
+   *   state.eventualMember to indicate that the member is an eventual send
    */
   parseSubscript(
     base: N.Expression,
@@ -597,7 +599,7 @@ export default class ExpressionParser extends LValParser {
       );
     }
     let optional = false;
-    let eventual = false;
+    let eventual = (state.eventualMember = false);
     if (this.match(tt.questionDot)) {
       state.optionalChainMember = optional = true;
       if (noCalls && this.lookaheadCharCode() === charCodes.leftParenthesis) {
@@ -607,7 +609,7 @@ export default class ExpressionParser extends LValParser {
       this.next();
     } else if (this.match(tt.tildeDot)) {
       this.expectPlugin("eventualSend");
-      eventual = true;
+      state.eventualMember = eventual = true;
       if (noCalls && this.lookaheadCharCode() === charCodes.leftParenthesis) {
         state.stop = true;
         return base;
@@ -648,7 +650,8 @@ export default class ExpressionParser extends LValParser {
       if (state.optionalChainMember) {
         node.optional = optional;
         return this.finishNode(node, "OptionalMemberExpression");
-      } else if (eventual) {
+      } else if (state.eventualMember) {
+        state.eventualMember = false;
         node.eventual = eventual;
         return this.finishNode(node, "EventualMemberExpression");
       } else {
@@ -682,7 +685,11 @@ export default class ExpressionParser extends LValParser {
           node,
         );
       }
-      this.finishCallExpression(node, state.optionalChainMember, eventual);
+      this.finishCallExpression(
+        node,
+        state.optionalChainMember,
+        state.eventualMember,
+      );
 
       if (
         state.maybeAsyncArrow &&

@@ -9,6 +9,7 @@ export default (_: any, opts: Object = {}) => {
     decoratorsLegacy = false,
     decoratorsBeforeExport,
     pipelineProposal = "minimal",
+    eventualSendTargetGlobal = "HandledPromise",
     recordAndTupleSyntax: recordAndTupleSyntax = "hash",
   } = opts;
 
@@ -23,6 +24,10 @@ export default (_: any, opts: Object = {}) => {
       [babelPlugins.syntaxRecordAndTuple, { syntaxType: recordAndTupleSyntax }],
       babelPlugins.proposalExportDefaultFrom,
       [babelPlugins.proposalPipelineOperator, { proposal: pipelineProposal }],
+      [
+        babelPlugins.proposalEventualSend,
+        { targetGlobal: eventualSendTargetGlobal },
+      ],
       babelPlugins.proposalDoExpressions,
     ],
   };

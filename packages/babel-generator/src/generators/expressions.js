@@ -62,6 +62,7 @@ export function NewExpression(node: Object, parent: Object) {
     this.format.minified &&
     node.arguments.length === 0 &&
     !node.optional &&
+    !node.eventual &&
     !t.isCallExpression(parent, { callee: node }) &&
     !t.isMemberExpression(parent) &&
     !t.isNewExpression(parent)
@@ -74,6 +75,8 @@ export function NewExpression(node: Object, parent: Object) {
 
   if (node.optional) {
     this.token("?.");
+  } else if (node.eventual) {
+    this.token("~.");
   }
   this.token("(");
   this.printList(node.arguments, node);
@@ -133,6 +136,47 @@ export function OptionalCallExpression(node: Object) {
 
   if (node.optional) {
     this.token("?.");
+  }
+  this.token("(");
+  this.printList(node.arguments, node);
+  this.token(")");
+}
+
+export function EventualMemberExpression(node: Object) {
+  this.print(node.object, node);
+
+  if (!node.computed && t.isMemberExpression(node.property)) {
+    throw new TypeError("Got a MemberExpression for MemberExpression property");
+  }
+
+  let computed = node.computed;
+  if (t.isLiteral(node.property) && typeof node.property.value === "number") {
+    computed = true;
+  }
+  if (node.eventual) {
+    this.token("~.");
+  }
+
+  if (computed) {
+    this.token("[");
+    this.print(node.property, node);
+    this.token("]");
+  } else {
+    if (!node.optional) {
+      this.token(".");
+    }
+    this.print(node.property, node);
+  }
+}
+
+export function EventualCallExpression(node: Object) {
+  this.print(node.callee, node);
+
+  this.print(node.typeArguments, node); // Flow
+  this.print(node.typeParameters, node); // TS
+
+  if (node.eventual) {
+    this.token("~.");
   }
   this.token("(");
   this.printList(node.arguments, node);

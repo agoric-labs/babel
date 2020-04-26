@@ -597,8 +597,17 @@ export default class ExpressionParser extends LValParser {
       );
     }
     let optional = false;
+    let eventual = false;
     if (this.match(tt.questionDot)) {
       state.optionalChainMember = optional = true;
+      if (noCalls && this.lookaheadCharCode() === charCodes.leftParenthesis) {
+        state.stop = true;
+        return base;
+      }
+      this.next();
+    } else if (this.match(tt.tildeDot)) {
+      this.expectPlugin("eventualSend");
+      eventual = true;
       if (noCalls && this.lookaheadCharCode() === charCodes.leftParenthesis) {
         state.stop = true;
         return base;
@@ -607,7 +616,9 @@ export default class ExpressionParser extends LValParser {
     }
     const computed = this.eat(tt.bracketL);
     if (
-      (optional && !this.match(tt.parenL) && !this.match(tt.backQuote)) ||
+      ((optional || eventual) &&
+        !this.match(tt.parenL) &&
+        !this.match(tt.backQuote)) ||
       computed ||
       this.eat(tt.dot)
     ) {
@@ -615,7 +626,7 @@ export default class ExpressionParser extends LValParser {
       node.object = base;
       node.property = computed
         ? this.parseExpression()
-        : optional
+        : optional || eventual
         ? this.parseIdentifier(true)
         : this.parseMaybePrivateName(true);
       node.computed = computed;
@@ -637,6 +648,9 @@ export default class ExpressionParser extends LValParser {
       if (state.optionalChainMember) {
         node.optional = optional;
         return this.finishNode(node, "OptionalMemberExpression");
+      } else if (eventual) {
+        node.eventual = eventual;
+        return this.finishNode(node, "EventualMemberExpression");
       } else {
         return this.finishNode(node, "MemberExpression");
       }
@@ -656,6 +670,9 @@ export default class ExpressionParser extends LValParser {
       if (optional) {
         node.optional = true;
         node.arguments = this.parseCallExpressionArguments(tt.parenR, false);
+      } else if (eventual) {
+        node.eventual = true;
+        node.arguments = this.parseCallExpressionArguments(tt.parenR, false);
       } else {
         node.arguments = this.parseCallExpressionArguments(
           tt.parenR,
@@ -665,9 +682,13 @@ export default class ExpressionParser extends LValParser {
           node,
         );
       }
-      this.finishCallExpression(node, state.optionalChainMember);
+      this.finishCallExpression(node, state.optionalChainMember, eventual);
 
-      if (state.maybeAsyncArrow && this.shouldParseAsyncArrow() && !optional) {
+      if (
+        state.maybeAsyncArrow &&
+        this.shouldParseAsyncArrow() &&
+        !(optional || eventual)
+      ) {
         state.stop = true;
 
         node = this.parseAsyncArrowFromCallExpression(
@@ -760,10 +781,9 @@ export default class ExpressionParser extends LValParser {
     );
   }
 
-  finishCallExpression<T: N.CallExpression | N.OptionalCallExpression>(
-    node: T,
-    optional: boolean,
-  ): N.Expression {
+  finishCallExpression<
+    T: N.CallExpression | N.OptionalCallExpression | N.EventualCallExpression,
+  >(node: T, optional: boolean, eventual: boolean): N.Expression {
     if (node.callee.type === "Import") {
       if (node.arguments.length !== 1) {
         this.raise(node.start, Errors.ImportCallArity);
@@ -776,7 +796,11 @@ export default class ExpressionParser extends LValParser {
     }
     return this.finishNode(
       node,
-      optional ? "OptionalCallExpression" : "CallExpression",
+      optional
+        ? "OptionalCallExpression"
+        : eventual
+        ? "EventualCallExpression"
+        : "CallExpression",
     );
   }
 
@@ -1443,8 +1467,16 @@ export default class ExpressionParser extends LValParser {
       node.callee.type === "OptionalCallExpression"
     ) {
       this.raise(this.state.lastTokEnd, Errors.OptionalChainingNoNew);
+    } else if (
+      node.callee.type === "EventualMemberExpression" ||
+      node.callee.type === "EventualCallExpression"
+    ) {
+      this.raise(this.state.lastTokEnd, Errors.EventualNoNew);
     } else if (this.eat(tt.questionDot)) {
       this.raise(this.state.start, Errors.OptionalChainingNoNew);
+    } else if (this.eat(tt.tildeDot)) {
+      this.expectPlugin("eventualSend");
+      this.raise(this.state.start, Errors.EventualNoNew);
     }
 
     this.parseNewArguments(node);

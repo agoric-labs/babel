@@ -39,8 +39,7 @@
                   "start":17,"end":21,"loc":{"start":{"line":1,"column":17},"end":{"line":1,"column":21},"identifierName":"prop"},
                   "name": "prop"
                 },
-                "computed": true,
-                "eventual": true
+                "computed": true
               },
               "arguments": [
                 {

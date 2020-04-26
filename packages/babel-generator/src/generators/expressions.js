@@ -62,7 +62,6 @@ export function NewExpression(node: Object, parent: Object) {
     this.format.minified &&
     node.arguments.length === 0 &&
     !node.optional &&
-    !node.eventual &&
     !t.isCallExpression(parent, { callee: node }) &&
     !t.isMemberExpression(parent) &&
     !t.isNewExpression(parent)
@@ -75,8 +74,6 @@ export function NewExpression(node: Object, parent: Object) {
 
   if (node.optional) {
     this.token("?.");
-  } else if (node.eventual) {
-    this.token("~.");
   }
   this.token("(");
   this.printList(node.arguments, node);
@@ -153,9 +150,7 @@ export function EventualMemberExpression(node: Object) {
   if (t.isLiteral(node.property) && typeof node.property.value === "number") {
     computed = true;
   }
-  if (node.eventual) {
-    this.token("~.");
-  }
+  this.token("~.");
 
   if (computed) {
     this.token("[");
@@ -175,9 +170,7 @@ export function EventualCallExpression(node: Object) {
   this.print(node.typeArguments, node); // Flow
   this.print(node.typeParameters, node); // TS
 
-  if (node.eventual) {
-    this.token("~.");
-  }
+  this.token("~.");
   this.token("(");
   this.printList(node.arguments, node);
   this.token(")");

@@ -652,7 +652,6 @@ export default class ExpressionParser extends LValParser {
         return this.finishNode(node, "OptionalMemberExpression");
       } else if (state.eventualMember) {
         state.eventualMember = false;
-        node.eventual = eventual;
         return this.finishNode(node, "EventualMemberExpression");
       } else {
         return this.finishNode(node, "MemberExpression");
@@ -672,9 +671,6 @@ export default class ExpressionParser extends LValParser {
 
       if (optional) {
         node.optional = true;
-        node.arguments = this.parseCallExpressionArguments(tt.parenR, false);
-      } else if (eventual) {
-        node.eventual = true;
         node.arguments = this.parseCallExpressionArguments(tt.parenR, false);
       } else {
         node.arguments = this.parseCallExpressionArguments(

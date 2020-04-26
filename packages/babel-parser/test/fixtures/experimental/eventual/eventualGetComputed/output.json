@@ -40,8 +40,7 @@
                 },
                 "value": 123
               },
-              "computed": true,
-              "eventual": true
+              "computed": true
             }
           }
         ],

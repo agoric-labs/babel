@@ -84,7 +84,7 @@ defineType("ClassProperty", {
 });
 
 defineType("EventualMemberExpression", {
-  builder: ["object", "property", "computed", "eventual"],
+  builder: ["object", "property", "computed"],
   visitor: ["object", "property"],
   aliases: ["Expression"],
   fields: {
@@ -104,9 +104,6 @@ defineType("EventualMemberExpression", {
     },
     computed: {
       default: false,
-    },
-    eventual: {
-      validate: assertValueType("boolean"),
     },
   },
 });
@@ -167,7 +164,7 @@ defineType("PipelinePrimaryTopicReference", {
 
 defineType("EventualCallExpression", {
   visitor: ["callee", "arguments", "typeParameters", "typeArguments"],
-  builder: ["callee", "arguments", "eventual"],
+  builder: ["callee", "arguments"],
   aliases: ["Expression"],
   fields: {
     callee: {
@@ -180,9 +177,6 @@ defineType("EventualCallExpression", {
           assertNodeType("Expression", "SpreadElement", "JSXNamespacedName"),
         ),
       ),
-    },
-    eventual: {
-      validate: assertValueType("boolean"),
     },
     typeArguments: {
       validate: assertNodeType("TypeParameterInstantiation"),

@@ -36,8 +36,7 @@
                 "start":17,"end":20,"loc":{"start":{"line":2,"column":2},"end":{"line":2,"column":5},"identifierName":"def"},
                 "name": "def"
               },
-              "computed": false,
-              "eventual": true
+              "computed": false
             }
           }
         ],

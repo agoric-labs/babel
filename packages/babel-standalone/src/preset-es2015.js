@@ -46,10 +46,6 @@ export default (_: any, opts: Object): Object => {
       ],
       modules === "amd" && [babelPlugins.transformModulesAmd, optsLoose],
       modules === "umd" && [babelPlugins.transformModulesUmd, optsLoose],
-      [
-        babelPlugins.transformRegenerator,
-        { async: false, asyncGenerators: false },
-      ],
     ].filter(Boolean), // filter out falsy values
   };
 };

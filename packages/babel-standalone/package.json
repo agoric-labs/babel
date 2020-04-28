@@ -1,5 +1,5 @@
 {
-  "name": "@babel/standalone",
+  "name": "@agoric/babel-standalone",
   "version": "7.9.5",
   "description": "Standalone build of Babel for use in non-Node.js environments.",
   "main": "babel.js",
@@ -89,7 +89,6 @@
     "@babel/plugin-transform-react-jsx-development": "^7.9.0",
     "@babel/plugin-transform-react-jsx-self": "^7.9.0",
     "@babel/plugin-transform-react-jsx-source": "^7.9.0",
-    "@babel/plugin-transform-regenerator": "^7.8.7",
     "@babel/plugin-transform-reserved-words": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.9.0",
     "@babel/plugin-transform-shorthand-properties": "^7.8.3",

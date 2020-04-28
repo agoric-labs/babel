@@ -42,7 +42,6 @@ import transformNewTarget from "@babel/plugin-transform-new-target";
 import transformObjectSuper from "@babel/plugin-transform-object-super";
 import transformParameters from "@babel/plugin-transform-parameters";
 import transformPropertyLiterals from "@babel/plugin-transform-property-literals";
-import transformRegenerator from "@babel/plugin-transform-regenerator";
 import transformReservedWords from "@babel/plugin-transform-reserved-words";
 import transformShorthandProperties from "@babel/plugin-transform-shorthand-properties";
 import transformSpread from "@babel/plugin-transform-spread";
@@ -106,7 +105,6 @@ export default {
   "transform-object-super": transformObjectSuper,
   "transform-parameters": transformParameters,
   "transform-property-literals": transformPropertyLiterals,
-  "transform-regenerator": transformRegenerator,
   "transform-reserved-words": transformReservedWords,
   "transform-shorthand-properties": transformShorthandProperties,
   "transform-spread": transformSpread,

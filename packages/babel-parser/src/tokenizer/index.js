@@ -1,5 +1,7 @@
 // @flow
 
+/*:: declare var invariant; */
+
 import type { Options } from "../options";
 import * as N from "../types";
 import type { Position } from "../util/location";
@@ -7,7 +9,7 @@ import * as charCodes from "charcodes";
 import { isIdentifierStart, isIdentifierChar } from "../util/identifier";
 import { types as tt, keywords as keywordTypes, type TokenType } from "./types";
 import { type TokContext, types as ct } from "./context";
-import LocationParser, { Errors } from "../parser/location";
+import ParserErrors, { Errors } from "../parser/error";
 import { SourceLocation } from "../util/location";
 import {
   lineBreak,
@@ -108,7 +110,7 @@ export class Token {
 
 // ## Tokenizer
 
-export default class Tokenizer extends LocationParser {
+export default class Tokenizer extends ParserErrors {
   // Forward-declarations
   // parser/util.js
   /*::
@@ -223,7 +225,7 @@ export default class Tokenizer extends LocationParser {
 
   nextToken(): void {
     const curContext = this.curContext();
-    if (!curContext || !curContext.preserveSpace) this.skipSpace();
+    if (!curContext?.preserveSpace) this.skipSpace();
 
     this.state.octalPositions = [];
     this.state.start = this.state.pos;
@@ -707,6 +709,22 @@ export default class Tokenizer extends LocationParser {
     }
   }
 
+  readToken_tilde(): void {
+    // '~'
+    const next = this.input.charCodeAt(this.state.pos + 1);
+    if (next === charCodes.dot) {
+      // '~.'
+      const next2 = this.input.charCodeAt(this.state.pos + 2);
+      if (!(next2 >= charCodes.digit0 && next2 <= charCodes.digit9)) {
+        // '~.' not followed by a number
+        this.state.pos += 2;
+        this.finishToken(tt.tildeDot);
+        return;
+      }
+    }
+    this.finishOp(tt.tilde, 1);
+  }
+
   getTokenFromCode(code: number): void {
     switch (code) {
       // The interpretation of a dot depends on whether it is followed
@@ -880,7 +898,7 @@ export default class Tokenizer extends LocationParser {
         return;
 
       case charCodes.tilde:
-        this.finishOp(tt.tilde, 1);
+        this.readToken_tilde();
         return;
 
       case charCodes.atSign:
@@ -1360,10 +1378,14 @@ export default class Tokenizer extends LocationParser {
       default:
         if (ch >= charCodes.digit0 && ch <= charCodes.digit7) {
           const codePos = this.state.pos - 1;
-          // $FlowFixMe
-          let octalStr = this.input
+          const match = this.input
             .substr(this.state.pos - 1, 3)
-            .match(/^[0-7]+/)[0];
+            .match(/^[0-7]+/);
+
+          // This is never null, because of the if condition above.
+          /*:: invariant(match !== null) */
+          let octalStr = match[0];
+
           let octal = parseInt(octalStr, 8);
           if (octal > 255) {
             octalStr = octalStr.slice(0, -1);

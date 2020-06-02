@@ -27,6 +27,7 @@ import {
   isReservedWord,
   isStrictReservedWord,
   isStrictBindReservedWord,
+  isIdentifierStart,
 } from "../util/identifier";
 import type { Pos, Position } from "../util/location";
 import * as charCodes from "charcodes";
@@ -47,7 +48,7 @@ import {
   PARAM,
   functionFlags,
 } from "../util/production-parameter";
-import { Errors } from "./location";
+import { Errors } from "./error";
 
 export default class ExpressionParser extends LValParser {
   // Forward-declaration: defined in statement.js
@@ -501,7 +502,8 @@ export default class ExpressionParser extends LValParser {
         if (arg.type === "Identifier") {
           this.raise(node.start, Errors.StrictDelete);
         } else if (
-          arg.type === "MemberExpression" &&
+          (arg.type === "MemberExpression" ||
+            arg.type === "OptionalMemberExpression") &&
           arg.property.type === "PrivateName"
         ) {
           this.raise(node.start, Errors.DeletePrivateField);
@@ -597,8 +599,17 @@ export default class ExpressionParser extends LValParser {
       );
     }
     let optional = false;
+    let eventual = false;
     if (this.match(tt.questionDot)) {
       state.optionalChainMember = optional = true;
+      if (noCalls && this.lookaheadCharCode() === charCodes.leftParenthesis) {
+        state.stop = true;
+        return base;
+      }
+      this.next();
+    } else if (this.match(tt.tildeDot)) {
+      this.expectPlugin("eventualSend");
+      eventual = true;
       if (noCalls && this.lookaheadCharCode() === charCodes.leftParenthesis) {
         state.stop = true;
         return base;
@@ -607,7 +618,9 @@ export default class ExpressionParser extends LValParser {
     }
     const computed = this.eat(tt.bracketL);
     if (
-      (optional && !this.match(tt.parenL) && !this.match(tt.backQuote)) ||
+      ((optional || eventual) &&
+        !this.match(tt.parenL) &&
+        !this.match(tt.backQuote)) ||
       computed ||
       this.eat(tt.dot)
     ) {
@@ -615,8 +628,6 @@ export default class ExpressionParser extends LValParser {
       node.object = base;
       node.property = computed
         ? this.parseExpression()
-        : optional
-        ? this.parseIdentifier(true)
         : this.parseMaybePrivateName(true);
       node.computed = computed;
 
@@ -637,10 +648,17 @@ export default class ExpressionParser extends LValParser {
       if (state.optionalChainMember) {
         node.optional = optional;
         return this.finishNode(node, "OptionalMemberExpression");
+      } else if (eventual) {
+        base = this.finishNode(node, "EventualMemberExpression");
+        if (noCalls || !this.match(tt.parenL)) {
+          return base;
+        }
+        // Fallthrough...
       } else {
         return this.finishNode(node, "MemberExpression");
       }
-    } else if (!noCalls && this.match(tt.parenL)) {
+    }
+    if (!noCalls && this.match(tt.parenL)) {
       const oldMaybeInArrowParameters = this.state.maybeInArrowParameters;
       const oldYieldPos = this.state.yieldPos;
       const oldAwaitPos = this.state.awaitPos;
@@ -665,9 +683,13 @@ export default class ExpressionParser extends LValParser {
           node,
         );
       }
-      this.finishCallExpression(node, state.optionalChainMember);
+      this.finishCallExpression(node, state.optionalChainMember, eventual);
 
-      if (state.maybeAsyncArrow && this.shouldParseAsyncArrow() && !optional) {
+      if (
+        state.maybeAsyncArrow &&
+        this.shouldParseAsyncArrow() &&
+        !(optional || eventual)
+      ) {
         state.stop = true;
 
         node = this.parseAsyncArrowFromCallExpression(
@@ -760,19 +782,42 @@ export default class ExpressionParser extends LValParser {
     );
   }
 
-  finishCallExpression<T: N.CallExpression | N.OptionalCallExpression>(
-    node: T,
-    optional: boolean,
-  ): N.Expression {
+  finishCallExpression<
+    T:
+      | N.CallExpression
+      | N.OptionalCallExpression
+      | N.EventualCallExpression
+      | N.EventualMemberCallExpression,
+  >(node: T, optional: boolean, eventual: boolean): N.Expression {
     if (node.callee.type === "Import") {
-      if (node.arguments.length !== 1) {
-        this.raise(node.start, Errors.ImportCallArity);
+      if (node.arguments.length === 2) {
+        this.expectPlugin("moduleAttributes");
+      }
+      if (node.arguments.length === 0 || node.arguments.length > 2) {
+        this.raise(
+          node.start,
+          Errors.ImportCallArity,
+          this.hasPlugin("moduleAttributes")
+            ? "one or two arguments"
+            : "one argument",
+        );
       } else {
-        const importArg = node.arguments[0];
-        if (importArg && importArg.type === "SpreadElement") {
-          this.raise(importArg.start, Errors.ImportCallSpreadArgument);
+        for (const arg of node.arguments) {
+          if (arg.type === "SpreadElement") {
+            this.raise(arg.start, Errors.ImportCallSpreadArgument);
+          }
         }
       }
+    }
+    if (eventual) {
+      if (node.callee.type === "EventualMemberExpression") {
+        const base = node.callee;
+        node.callee = base.object;
+        node.property = base.property;
+        node.computed = base.computed;
+        return this.finishNode(node, "EventualMemberCallExpression");
+      }
+      return this.finishNode(node, "EventualCallExpression");
     }
     return this.finishNode(
       node,
@@ -799,7 +844,7 @@ export default class ExpressionParser extends LValParser {
       } else {
         this.expect(tt.comma);
         if (this.match(close)) {
-          if (dynamicImport) {
+          if (dynamicImport && !this.hasPlugin("moduleAttributes")) {
             this.raise(
               this.state.lastTokStart,
               Errors.ImportCallArgumentTrailingComma,
@@ -1138,6 +1183,26 @@ export default class ExpressionParser extends LValParser {
           this.registerTopicReference();
           return this.finishNode(node, "PipelinePrimaryTopicReference");
         }
+
+        const nextCh = this.input.codePointAt(this.state.end);
+        if (isIdentifierStart(nextCh) || nextCh === charCodes.backslash) {
+          const start = this.state.start;
+          // $FlowIgnore It'll either parse a PrivateName or throw.
+          node = (this.parseMaybePrivateName(true): N.PrivateName);
+          if (this.match(tt._in)) {
+            this.expectPlugin("privateIn");
+            this.classScope.usePrivateName(node.id.name, node.start);
+          } else if (this.hasPlugin("privateIn")) {
+            this.raise(
+              this.state.start,
+              Errors.PrivateInExpectedIn,
+              node.id.name,
+            );
+          } else {
+            throw this.unexpected(start);
+          }
+          return node;
+        }
       }
       // fall through
       default:
@@ -1227,8 +1292,6 @@ export default class ExpressionParser extends LValParser {
     this.expect(tt.dot);
 
     if (this.isContextual("meta")) {
-      this.expectPlugin("importMeta");
-
       if (!this.inModule) {
         this.raiseWithData(
           id.start,
@@ -1237,8 +1300,6 @@ export default class ExpressionParser extends LValParser {
         );
       }
       this.sawUnambiguousESM = true;
-    } else if (!this.hasPlugin("importMeta")) {
-      this.raise(id.start, Errors.ImportCallArityLtOne);
     }
 
     return this.parseMetaProperty(node, id, "meta");
@@ -1443,8 +1504,16 @@ export default class ExpressionParser extends LValParser {
       node.callee.type === "OptionalCallExpression"
     ) {
       this.raise(this.state.lastTokEnd, Errors.OptionalChainingNoNew);
+    } else if (
+      node.callee.type === "EventualMemberExpression" ||
+      node.callee.type === "EventualCallExpression"
+    ) {
+      this.raise(this.state.lastTokEnd, Errors.EventualNoNew);
     } else if (this.eat(tt.questionDot)) {
       this.raise(this.state.start, Errors.OptionalChainingNoNew);
+    } else if (this.eat(tt.tildeDot)) {
+      this.expectPlugin("eventualSend");
+      this.raise(this.state.start, Errors.EventualNoNew);
     }
 
     this.parseNewArguments(node);
@@ -1553,11 +1622,8 @@ export default class ExpressionParser extends LValParser {
       !prop.computed &&
       prop.key.type === "Identifier" &&
       prop.key.name === "async" &&
-      (this.match(tt.name) ||
-        this.match(tt.num) ||
-        this.match(tt.string) ||
+      (this.isLiteralPropertyName() ||
         this.match(tt.bracketL) ||
-        this.state.type.keyword ||
         this.match(tt.star)) &&
       !this.hasPrecedingLineBreak()
     );
@@ -1646,11 +1712,8 @@ export default class ExpressionParser extends LValParser {
       !prop.computed &&
       prop.key.type === "Identifier" &&
       (prop.key.name === "get" || prop.key.name === "set") &&
-      (this.match(tt.string) || // get "string"() {}
-      this.match(tt.num) || // get 1() {}
-      this.match(tt.bracketL) || // get ["string"]() {}
-      this.match(tt.name) || // get foo() {}
-        !!this.state.type.keyword) // get debugger() {}
+      (this.isLiteralPropertyName() || // get foo() {}
+        this.match(tt.bracketL)) // get ["string"]() {}
     );
   }
 

@@ -8,12 +8,14 @@ import syntaxAsyncGenerators from "@babel/plugin-syntax-async-generators";
 import syntaxClassProperties from "@babel/plugin-syntax-class-properties";
 import syntaxDecorators from "@babel/plugin-syntax-decorators";
 import syntaxDoExpressions from "@babel/plugin-syntax-do-expressions";
+import syntaxEventualSend from "@babel/plugin-syntax-eventual-send";
 import syntaxExportDefaultFrom from "@babel/plugin-syntax-export-default-from";
 import syntaxFlow from "@babel/plugin-syntax-flow";
 import syntaxFunctionBind from "@babel/plugin-syntax-function-bind";
 import syntaxFunctionSent from "@babel/plugin-syntax-function-sent";
 import syntaxImportMeta from "@babel/plugin-syntax-import-meta";
 import syntaxJsx from "@babel/plugin-syntax-jsx";
+import syntaxModuleAttributes from "@babel/plugin-syntax-module-attributes";
 import syntaxObjectRestSpread from "@babel/plugin-syntax-object-rest-spread";
 import syntaxOptionalCatchBinding from "@babel/plugin-syntax-optional-catch-binding";
 import syntaxPipelineOperator from "@babel/plugin-syntax-pipeline-operator";
@@ -25,6 +27,7 @@ import proposalClassProperties from "@babel/plugin-proposal-class-properties";
 import proposalDecorators from "@babel/plugin-proposal-decorators";
 import proposalDoExpressions from "@babel/plugin-proposal-do-expressions";
 import proposalDynamicImport from "@babel/plugin-proposal-dynamic-import";
+import proposalEventualSend from "@babel/plugin-proposal-eventual-send";
 import proposalExportDefaultFrom from "@babel/plugin-proposal-export-default-from";
 import proposalExportNamespaceFrom from "@babel/plugin-proposal-export-namespace-from";
 import proposalFunctionBind from "@babel/plugin-proposal-function-bind";
@@ -38,6 +41,7 @@ import proposalOptionalCatchBinding from "@babel/plugin-proposal-optional-catch-
 import proposalOptionalChaining from "@babel/plugin-proposal-optional-chaining";
 import proposalPipelineOperator from "@babel/plugin-proposal-pipeline-operator";
 import proposalPrivateMethods from "@babel/plugin-proposal-private-methods";
+import proposalPrivatePropertyInObject from "@babel/plugin-proposal-private-property-in-object";
 import proposalThrowExpressions from "@babel/plugin-proposal-throw-expressions";
 import proposalUnicodePropertyRegex from "@babel/plugin-proposal-unicode-property-regex";
 import transformAsyncToGenerator from "@babel/plugin-transform-async-to-generator";
@@ -89,6 +93,7 @@ import transformStrictMode from "@babel/plugin-transform-strict-mode";
 import transformTemplateLiterals from "@babel/plugin-transform-template-literals";
 import transformTypeofSymbol from "@babel/plugin-transform-typeof-symbol";
 import transformTypescript from "@babel/plugin-transform-typescript";
+import transformUnicodeEscapes from "@babel/plugin-transform-unicode-escapes";
 import transformUnicodeRegex from "@babel/plugin-transform-unicode-regex";
 
 export {
@@ -97,12 +102,14 @@ export {
   syntaxClassProperties,
   syntaxDecorators,
   syntaxDoExpressions,
+  syntaxEventualSend,
   syntaxExportDefaultFrom,
   syntaxFlow,
   syntaxFunctionBind,
   syntaxFunctionSent,
   syntaxImportMeta,
   syntaxJsx,
+  syntaxModuleAttributes,
   syntaxObjectRestSpread,
   syntaxOptionalCatchBinding,
   syntaxPipelineOperator,
@@ -114,6 +121,7 @@ export {
   proposalDecorators,
   proposalDoExpressions,
   proposalDynamicImport,
+  proposalEventualSend,
   proposalExportDefaultFrom,
   proposalExportNamespaceFrom,
   proposalFunctionBind,
@@ -127,6 +135,7 @@ export {
   proposalOptionalChaining,
   proposalPipelineOperator,
   proposalPrivateMethods,
+  proposalPrivatePropertyInObject,
   proposalThrowExpressions,
   proposalUnicodePropertyRegex,
   transformAsyncToGenerator,
@@ -178,6 +187,7 @@ export {
   transformTemplateLiterals,
   transformTypeofSymbol,
   transformTypescript,
+  transformUnicodeEscapes,
   transformUnicodeRegex,
 };
 
@@ -187,12 +197,14 @@ export const all = {
   "syntax-class-properties": syntaxClassProperties,
   "syntax-decorators": syntaxDecorators,
   "syntax-do-expressions": syntaxDoExpressions,
+  "syntax-eventual-send": syntaxEventualSend,
   "syntax-export-default-from": syntaxExportDefaultFrom,
   "syntax-flow": syntaxFlow,
   "syntax-function-bind": syntaxFunctionBind,
   "syntax-function-sent": syntaxFunctionSent,
   "syntax-import-meta": syntaxImportMeta,
   "syntax-jsx": syntaxJsx,
+  "syntax-module-attributes": syntaxModuleAttributes,
   "syntax-object-rest-spread": syntaxObjectRestSpread,
   "syntax-optional-catch-binding": syntaxOptionalCatchBinding,
   "syntax-pipeline-operator": syntaxPipelineOperator,
@@ -204,6 +216,7 @@ export const all = {
   "proposal-decorators": proposalDecorators,
   "proposal-do-expressions": proposalDoExpressions,
   "proposal-dynamic-import": proposalDynamicImport,
+  "proposal-eventual-send": proposalEventualSend,
   "proposal-export-default-from": proposalExportDefaultFrom,
   "proposal-export-namespace-from": proposalExportNamespaceFrom,
   "proposal-function-bind": proposalFunctionBind,
@@ -217,6 +230,7 @@ export const all = {
   "proposal-optional-chaining": proposalOptionalChaining,
   "proposal-pipeline-operator": proposalPipelineOperator,
   "proposal-private-methods": proposalPrivateMethods,
+  "proposal-private-property-in-object": proposalPrivatePropertyInObject,
   "proposal-throw-expressions": proposalThrowExpressions,
   "proposal-unicode-property-regex": proposalUnicodePropertyRegex,
   "transform-async-to-generator": transformAsyncToGenerator,
@@ -268,5 +282,6 @@ export const all = {
   "transform-template-literals": transformTemplateLiterals,
   "transform-typeof-symbol": transformTypeofSymbol,
   "transform-typescript": transformTypescript,
+  "transform-unicode-escapes": transformUnicodeEscapes,
   "transform-unicode-regex": transformUnicodeRegex,
 };

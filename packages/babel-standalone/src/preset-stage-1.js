@@ -9,7 +9,9 @@ export default (_: any, opts: Object = {}) => {
     decoratorsLegacy = false,
     decoratorsBeforeExport,
     pipelineProposal = "minimal",
+    eventualSendTargetGlobal = "HandledPromise",
     recordAndTupleSyntax: recordAndTupleSyntax = "hash",
+    moduleAttributesVersion = "may-2020",
   } = opts;
 
   return {
@@ -20,9 +22,18 @@ export default (_: any, opts: Object = {}) => {
       ],
     ],
     plugins: [
+      [
+        babelPlugins.syntaxModuleAttributes,
+        { version: moduleAttributesVersion },
+      ],
       [babelPlugins.syntaxRecordAndTuple, { syntaxType: recordAndTupleSyntax }],
       babelPlugins.proposalExportDefaultFrom,
       [babelPlugins.proposalPipelineOperator, { proposal: pipelineProposal }],
+      babelPlugins.proposalPrivatePropertyInObject,
+      [
+        babelPlugins.proposalEventualSend,
+        { targetGlobal: eventualSendTargetGlobal },
+      ],
       babelPlugins.proposalDoExpressions,
     ],
   };

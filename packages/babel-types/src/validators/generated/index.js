@@ -2317,6 +2317,40 @@ export function isClassProperty(node: ?Object, opts?: Object): boolean {
 
   return false;
 }
+export function isEventualMemberExpression(
+  node: ?Object,
+  opts?: Object,
+): boolean {
+  if (!node) return false;
+
+  const nodeType = node.type;
+  if (nodeType === "EventualMemberExpression") {
+    if (typeof opts === "undefined") {
+      return true;
+    } else {
+      return shallowEqual(node, opts);
+    }
+  }
+
+  return false;
+}
+export function isEventualMemberCallExpression(
+  node: ?Object,
+  opts?: Object,
+): boolean {
+  if (!node) return false;
+
+  const nodeType = node.type;
+  if (nodeType === "EventualMemberCallExpression") {
+    if (typeof opts === "undefined") {
+      return true;
+    } else {
+      return shallowEqual(node, opts);
+    }
+  }
+
+  return false;
+}
 export function isOptionalMemberExpression(
   node: ?Object,
   opts?: Object,
@@ -2382,6 +2416,23 @@ export function isPipelinePrimaryTopicReference(
 
   return false;
 }
+export function isEventualCallExpression(
+  node: ?Object,
+  opts?: Object,
+): boolean {
+  if (!node) return false;
+
+  const nodeType = node.type;
+  if (nodeType === "EventualCallExpression") {
+    if (typeof opts === "undefined") {
+      return true;
+    } else {
+      return shallowEqual(node, opts);
+    }
+  }
+
+  return false;
+}
 export function isOptionalCallExpression(
   node: ?Object,
   opts?: Object,
@@ -2432,6 +2483,20 @@ export function isImport(node: ?Object, opts?: Object): boolean {
 
   const nodeType = node.type;
   if (nodeType === "Import") {
+    if (typeof opts === "undefined") {
+      return true;
+    } else {
+      return shallowEqual(node, opts);
+    }
+  }
+
+  return false;
+}
+export function isImportAttribute(node: ?Object, opts?: Object): boolean {
+  if (!node) return false;
+
+  const nodeType = node.type;
+  if (nodeType === "ImportAttribute") {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -3482,8 +3547,11 @@ export function isExpression(node: ?Object, opts?: Object): boolean {
     "JSXFragment" === nodeType ||
     "AwaitExpression" === nodeType ||
     "BindExpression" === nodeType ||
+    "EventualMemberExpression" === nodeType ||
+    "EventualMemberCallExpression" === nodeType ||
     "OptionalMemberExpression" === nodeType ||
     "PipelinePrimaryTopicReference" === nodeType ||
+    "EventualCallExpression" === nodeType ||
     "OptionalCallExpression" === nodeType ||
     "Import" === nodeType ||
     "DoExpression" === nodeType ||

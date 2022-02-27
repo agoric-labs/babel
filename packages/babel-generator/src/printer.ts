@@ -349,6 +349,15 @@ class Printer {
         this._newline();
       }
     }
+
+    // catch up to this nodes column if we're behind
+    if (pos?.column != null) {
+      const count = pos.column - this._buf.getCurrentColumn();
+
+      if (count > 0) {
+        this._append(" ".repeat(count));
+      }
+    }
   }
 
   /**
@@ -356,6 +365,7 @@ class Printer {
    */
 
   _getIndent(): string {
+    if (this.format.retainLines) return "";
     return this.format.indent.style.repeat(this._indent);
   }
 

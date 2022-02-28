@@ -20,7 +20,7 @@ import {
   buildExternalHelpers as babelBuildExternalHelpers,
 } from "@babel/core";
 import { all } from "./generated/plugins";
-import preset2015 from "./preset-es2015";
+/*import preset2015 from "./preset-es2015";
 import presetStage0 from "./preset-stage-0";
 import presetStage1 from "./preset-stage-1";
 import presetStage2 from "./preset-stage-2";
@@ -29,6 +29,7 @@ import presetEnv from "@babel/preset-env";
 import presetFlow from "@babel/preset-flow";
 import presetReact from "@babel/preset-react";
 import presetTypescript from "@babel/preset-typescript";
+*/
 
 import { runScripts } from "./transformScriptTags";
 
@@ -174,16 +175,16 @@ registerPlugins(all);
 // Want to get rid of this list of allowed presets?
 // Wait! Please read https://github.com/babel/babel/pull/6177 first.
 registerPresets({
-  env: presetEnv,
+/*  env: presetEnv,
   es2015: preset2015,
   es2016: () => {
     return {
-      plugins: [availablePlugins["transform-exponentiation-operator"]],
+      // plugins: [availablePlugins["transform-exponentiation-operator"]],
     };
   },
   es2017: () => {
     return {
-      plugins: [availablePlugins["transform-async-to-generator"]],
+      // plugins: [availablePlugins["transform-async-to-generator"]],
     };
   },
   react: presetReact,
@@ -200,6 +201,7 @@ registerPresets({
   },
   typescript: presetTypescript,
   flow: presetFlow,
+  */
 });
 
 // @ts-ignore VERSION is to be replaced by rollup

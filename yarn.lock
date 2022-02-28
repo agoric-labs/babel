@@ -5,6 +5,59 @@ __metadata:
   version: 5
   cacheKey: 8
 
+"@agoric/babel-standalone@workspace:packages/babel-standalone":
+  version: 0.0.0-use.local
+  resolution: "@agoric/babel-standalone@workspace:packages/babel-standalone"
+  dependencies:
+    "@babel/core": "workspace:^"
+    "@babel/plugin-external-helpers": "workspace:^"
+    "@babel/plugin-proposal-async-generator-functions": "workspace:^"
+    "@babel/plugin-proposal-class-properties": "workspace:^"
+    "@babel/plugin-proposal-class-static-block": "workspace:^"
+    "@babel/plugin-proposal-decorators": "workspace:^"
+    "@babel/plugin-proposal-do-expressions": "workspace:^"
+    "@babel/plugin-proposal-dynamic-import": "workspace:^"
+    "@babel/plugin-proposal-export-default-from": "workspace:^"
+    "@babel/plugin-proposal-export-namespace-from": "workspace:^"
+    "@babel/plugin-proposal-function-bind": "workspace:^"
+    "@babel/plugin-proposal-function-sent": "workspace:^"
+    "@babel/plugin-proposal-json-strings": "workspace:^"
+    "@babel/plugin-proposal-logical-assignment-operators": "workspace:^"
+    "@babel/plugin-proposal-nullish-coalescing-operator": "workspace:^"
+    "@babel/plugin-proposal-numeric-separator": "workspace:^"
+    "@babel/plugin-proposal-object-rest-spread": "workspace:^"
+    "@babel/plugin-proposal-optional-catch-binding": "workspace:^"
+    "@babel/plugin-proposal-optional-chaining": "workspace:^"
+    "@babel/plugin-proposal-pipeline-operator": "workspace:^"
+    "@babel/plugin-proposal-private-methods": "workspace:^"
+    "@babel/plugin-proposal-private-property-in-object": "workspace:^"
+    "@babel/plugin-proposal-throw-expressions": "workspace:^"
+    "@babel/plugin-proposal-unicode-property-regex": "workspace:^"
+    "@babel/plugin-syntax-async-generators": ^7.8.4
+    "@babel/plugin-syntax-class-properties": ^7.12.13
+    "@babel/plugin-syntax-class-static-block": ^7.14.5
+    "@babel/plugin-syntax-decimal": "workspace:^"
+    "@babel/plugin-syntax-decorators": "workspace:^"
+    "@babel/plugin-syntax-destructuring-private": "workspace:^"
+    "@babel/plugin-syntax-do-expressions": "workspace:^"
+    "@babel/plugin-syntax-export-default-from": "workspace:^"
+    "@babel/plugin-syntax-flow": "workspace:^"
+    "@babel/plugin-syntax-function-bind": "workspace:^"
+    "@babel/plugin-syntax-function-sent": "workspace:^"
+    "@babel/plugin-syntax-import-assertions": "workspace:^"
+    "@babel/plugin-syntax-import-meta": ^7.10.4
+    "@babel/plugin-syntax-jsx": "workspace:^"
+    "@babel/plugin-syntax-module-blocks": "workspace:^"
+    "@babel/plugin-syntax-object-rest-spread": ^7.8.3
+    "@babel/plugin-syntax-optional-catch-binding": ^7.8.3
+    "@babel/plugin-syntax-pipeline-operator": "workspace:^"
+    "@babel/plugin-syntax-record-and-tuple": "workspace:^"
+    "@babel/plugin-syntax-top-level-await": ^7.14.5
+    "@babel/plugin-syntax-typescript": "workspace:^"
+    "@babel/preset-env": "workspace:^"
+  languageName: unknown
+  linkType: soft
+
 "@ampproject/remapping@npm:^2.0.0, @ampproject/remapping@npm:^2.1.0":
   version: 2.1.0
   resolution: "@ampproject/remapping@npm:2.1.0"
@@ -2420,7 +2473,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@babel/plugin-transform-flow-comments@workspace:^, @babel/plugin-transform-flow-comments@workspace:packages/babel-plugin-transform-flow-comments":
+"@babel/plugin-transform-flow-comments@workspace:packages/babel-plugin-transform-flow-comments":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-flow-comments@workspace:packages/babel-plugin-transform-flow-comments"
   dependencies:
@@ -2509,7 +2562,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@babel/plugin-transform-instanceof@workspace:^, @babel/plugin-transform-instanceof@workspace:packages/babel-plugin-transform-instanceof":
+"@babel/plugin-transform-instanceof@workspace:packages/babel-plugin-transform-instanceof":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-instanceof@workspace:packages/babel-plugin-transform-instanceof"
   dependencies:
@@ -2521,7 +2574,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@babel/plugin-transform-jscript@workspace:^, @babel/plugin-transform-jscript@workspace:packages/babel-plugin-transform-jscript":
+"@babel/plugin-transform-jscript@workspace:packages/babel-plugin-transform-jscript":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-jscript@workspace:packages/babel-plugin-transform-jscript"
   dependencies:
@@ -2746,7 +2799,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@babel/plugin-transform-object-assign@workspace:^, @babel/plugin-transform-object-assign@workspace:packages/babel-plugin-transform-object-assign":
+"@babel/plugin-transform-object-assign@workspace:packages/babel-plugin-transform-object-assign":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-object-assign@workspace:packages/babel-plugin-transform-object-assign"
   dependencies:
@@ -2757,7 +2810,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@babel/plugin-transform-object-set-prototype-of-to-assign@workspace:^, @babel/plugin-transform-object-set-prototype-of-to-assign@workspace:packages/babel-plugin-transform-object-set-prototype-of-to-assign":
+"@babel/plugin-transform-object-set-prototype-of-to-assign@workspace:packages/babel-plugin-transform-object-set-prototype-of-to-assign":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-object-set-prototype-of-to-assign@workspace:packages/babel-plugin-transform-object-set-prototype-of-to-assign"
   dependencies:
@@ -2840,7 +2893,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@babel/plugin-transform-property-mutators@workspace:^, @babel/plugin-transform-property-mutators@workspace:packages/babel-plugin-transform-property-mutators":
+"@babel/plugin-transform-property-mutators@workspace:packages/babel-plugin-transform-property-mutators":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-property-mutators@workspace:packages/babel-plugin-transform-property-mutators"
   dependencies:
@@ -2853,7 +2906,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@babel/plugin-transform-proto-to-assign@workspace:^, @babel/plugin-transform-proto-to-assign@workspace:packages/babel-plugin-transform-proto-to-assign":
+"@babel/plugin-transform-proto-to-assign@workspace:packages/babel-plugin-transform-proto-to-assign":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-proto-to-assign@workspace:packages/babel-plugin-transform-proto-to-assign"
   dependencies:
@@ -2865,7 +2918,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@babel/plugin-transform-react-constant-elements@workspace:^, @babel/plugin-transform-react-constant-elements@workspace:packages/babel-plugin-transform-react-constant-elements":
+"@babel/plugin-transform-react-constant-elements@workspace:packages/babel-plugin-transform-react-constant-elements":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-react-constant-elements@workspace:packages/babel-plugin-transform-react-constant-elements"
   dependencies:
@@ -2889,7 +2942,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@babel/plugin-transform-react-inline-elements@workspace:^, @babel/plugin-transform-react-inline-elements@workspace:packages/babel-plugin-transform-react-inline-elements":
+"@babel/plugin-transform-react-inline-elements@workspace:packages/babel-plugin-transform-react-inline-elements":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-react-inline-elements@workspace:packages/babel-plugin-transform-react-inline-elements"
   dependencies:
@@ -2902,7 +2955,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@babel/plugin-transform-react-jsx-compat@workspace:^, @babel/plugin-transform-react-jsx-compat@workspace:packages/babel-plugin-transform-react-jsx-compat":
+"@babel/plugin-transform-react-jsx-compat@workspace:packages/babel-plugin-transform-react-jsx-compat":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-react-jsx-compat@workspace:packages/babel-plugin-transform-react-jsx-compat"
   dependencies:
@@ -2927,7 +2980,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@babel/plugin-transform-react-jsx-self@workspace:^, @babel/plugin-transform-react-jsx-self@workspace:packages/babel-plugin-transform-react-jsx-self":
+"@babel/plugin-transform-react-jsx-self@workspace:packages/babel-plugin-transform-react-jsx-self":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-react-jsx-self@workspace:packages/babel-plugin-transform-react-jsx-self"
   dependencies:
@@ -2940,7 +2993,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@babel/plugin-transform-react-jsx-source@workspace:^, @babel/plugin-transform-react-jsx-source@workspace:packages/babel-plugin-transform-react-jsx-source":
+"@babel/plugin-transform-react-jsx-source@workspace:packages/babel-plugin-transform-react-jsx-source":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-react-jsx-source@workspace:packages/babel-plugin-transform-react-jsx-source"
   dependencies:
@@ -3045,7 +3098,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-runtime@workspace:^, @babel/plugin-transform-runtime@workspace:packages/babel-plugin-transform-runtime":
+"@babel/plugin-transform-runtime@workspace:packages/babel-plugin-transform-runtime":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-runtime@workspace:packages/babel-plugin-transform-runtime"
   dependencies:
@@ -3140,7 +3193,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@babel/plugin-transform-strict-mode@workspace:^, @babel/plugin-transform-strict-mode@workspace:packages/babel-plugin-transform-strict-mode":
+"@babel/plugin-transform-strict-mode@workspace:packages/babel-plugin-transform-strict-mode":
   version: 0.0.0-use.local
   resolution: "@babel/plugin-transform-strict-mode@workspace:packages/babel-plugin-transform-strict-mode"
   dependencies:
@@ -3521,7 +3574,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-typescript@workspace:^, @babel/preset-typescript@workspace:packages/babel-preset-typescript":
+"@babel/preset-typescript@workspace:packages/babel-preset-typescript":
   version: 0.0.0-use.local
   resolution: "@babel/preset-typescript@workspace:packages/babel-preset-typescript"
   dependencies:
@@ -3585,113 +3638,6 @@ __metadata:
   resolution: "@babel/runtime@workspace:packages/babel-runtime"
   dependencies:
     regenerator-runtime: ^0.13.4
-  languageName: unknown
-  linkType: soft
-
-"@babel/standalone@workspace:packages/babel-standalone":
-  version: 0.0.0-use.local
-  resolution: "@babel/standalone@workspace:packages/babel-standalone"
-  dependencies:
-    "@babel/core": "workspace:^"
-    "@babel/plugin-external-helpers": "workspace:^"
-    "@babel/plugin-proposal-async-generator-functions": "workspace:^"
-    "@babel/plugin-proposal-class-properties": "workspace:^"
-    "@babel/plugin-proposal-class-static-block": "workspace:^"
-    "@babel/plugin-proposal-decorators": "workspace:^"
-    "@babel/plugin-proposal-do-expressions": "workspace:^"
-    "@babel/plugin-proposal-dynamic-import": "workspace:^"
-    "@babel/plugin-proposal-export-default-from": "workspace:^"
-    "@babel/plugin-proposal-export-namespace-from": "workspace:^"
-    "@babel/plugin-proposal-function-bind": "workspace:^"
-    "@babel/plugin-proposal-function-sent": "workspace:^"
-    "@babel/plugin-proposal-json-strings": "workspace:^"
-    "@babel/plugin-proposal-logical-assignment-operators": "workspace:^"
-    "@babel/plugin-proposal-nullish-coalescing-operator": "workspace:^"
-    "@babel/plugin-proposal-numeric-separator": "workspace:^"
-    "@babel/plugin-proposal-object-rest-spread": "workspace:^"
-    "@babel/plugin-proposal-optional-catch-binding": "workspace:^"
-    "@babel/plugin-proposal-optional-chaining": "workspace:^"
-    "@babel/plugin-proposal-pipeline-operator": "workspace:^"
-    "@babel/plugin-proposal-private-methods": "workspace:^"
-    "@babel/plugin-proposal-private-property-in-object": "workspace:^"
-    "@babel/plugin-proposal-throw-expressions": "workspace:^"
-    "@babel/plugin-proposal-unicode-property-regex": "workspace:^"
-    "@babel/plugin-syntax-async-generators": ^7.8.4
-    "@babel/plugin-syntax-class-properties": ^7.12.13
-    "@babel/plugin-syntax-class-static-block": ^7.14.5
-    "@babel/plugin-syntax-decimal": "workspace:^"
-    "@babel/plugin-syntax-decorators": "workspace:^"
-    "@babel/plugin-syntax-destructuring-private": "workspace:^"
-    "@babel/plugin-syntax-do-expressions": "workspace:^"
-    "@babel/plugin-syntax-export-default-from": "workspace:^"
-    "@babel/plugin-syntax-flow": "workspace:^"
-    "@babel/plugin-syntax-function-bind": "workspace:^"
-    "@babel/plugin-syntax-function-sent": "workspace:^"
-    "@babel/plugin-syntax-import-assertions": "workspace:^"
-    "@babel/plugin-syntax-import-meta": ^7.10.4
-    "@babel/plugin-syntax-jsx": "workspace:^"
-    "@babel/plugin-syntax-module-blocks": "workspace:^"
-    "@babel/plugin-syntax-object-rest-spread": ^7.8.3
-    "@babel/plugin-syntax-optional-catch-binding": ^7.8.3
-    "@babel/plugin-syntax-pipeline-operator": "workspace:^"
-    "@babel/plugin-syntax-record-and-tuple": "workspace:^"
-    "@babel/plugin-syntax-top-level-await": ^7.14.5
-    "@babel/plugin-syntax-typescript": "workspace:^"
-    "@babel/plugin-transform-arrow-functions": "workspace:^"
-    "@babel/plugin-transform-async-to-generator": "workspace:^"
-    "@babel/plugin-transform-block-scoped-functions": "workspace:^"
-    "@babel/plugin-transform-block-scoping": "workspace:^"
-    "@babel/plugin-transform-classes": "workspace:^"
-    "@babel/plugin-transform-computed-properties": "workspace:^"
-    "@babel/plugin-transform-destructuring": "workspace:^"
-    "@babel/plugin-transform-dotall-regex": "workspace:^"
-    "@babel/plugin-transform-duplicate-keys": "workspace:^"
-    "@babel/plugin-transform-exponentiation-operator": "workspace:^"
-    "@babel/plugin-transform-flow-comments": "workspace:^"
-    "@babel/plugin-transform-flow-strip-types": "workspace:^"
-    "@babel/plugin-transform-for-of": "workspace:^"
-    "@babel/plugin-transform-function-name": "workspace:^"
-    "@babel/plugin-transform-instanceof": "workspace:^"
-    "@babel/plugin-transform-jscript": "workspace:^"
-    "@babel/plugin-transform-literals": "workspace:^"
-    "@babel/plugin-transform-member-expression-literals": "workspace:^"
-    "@babel/plugin-transform-modules-amd": "workspace:^"
-    "@babel/plugin-transform-modules-commonjs": "workspace:^"
-    "@babel/plugin-transform-modules-systemjs": "workspace:^"
-    "@babel/plugin-transform-modules-umd": "workspace:^"
-    "@babel/plugin-transform-named-capturing-groups-regex": "workspace:^"
-    "@babel/plugin-transform-new-target": "workspace:^"
-    "@babel/plugin-transform-object-assign": "workspace:^"
-    "@babel/plugin-transform-object-set-prototype-of-to-assign": "workspace:^"
-    "@babel/plugin-transform-object-super": "workspace:^"
-    "@babel/plugin-transform-parameters": "workspace:^"
-    "@babel/plugin-transform-property-literals": "workspace:^"
-    "@babel/plugin-transform-property-mutators": "workspace:^"
-    "@babel/plugin-transform-proto-to-assign": "workspace:^"
-    "@babel/plugin-transform-react-constant-elements": "workspace:^"
-    "@babel/plugin-transform-react-display-name": "workspace:^"
-    "@babel/plugin-transform-react-inline-elements": "workspace:^"
-    "@babel/plugin-transform-react-jsx": "workspace:^"
-    "@babel/plugin-transform-react-jsx-compat": "workspace:^"
-    "@babel/plugin-transform-react-jsx-development": "workspace:^"
-    "@babel/plugin-transform-react-jsx-self": "workspace:^"
-    "@babel/plugin-transform-react-jsx-source": "workspace:^"
-    "@babel/plugin-transform-regenerator": "workspace:^"
-    "@babel/plugin-transform-reserved-words": "workspace:^"
-    "@babel/plugin-transform-runtime": "workspace:^"
-    "@babel/plugin-transform-shorthand-properties": "workspace:^"
-    "@babel/plugin-transform-spread": "workspace:^"
-    "@babel/plugin-transform-sticky-regex": "workspace:^"
-    "@babel/plugin-transform-strict-mode": "workspace:^"
-    "@babel/plugin-transform-template-literals": "workspace:^"
-    "@babel/plugin-transform-typeof-symbol": "workspace:^"
-    "@babel/plugin-transform-typescript": "workspace:^"
-    "@babel/plugin-transform-unicode-escapes": "workspace:^"
-    "@babel/plugin-transform-unicode-regex": "workspace:^"
-    "@babel/preset-env": "workspace:^"
-    "@babel/preset-flow": "workspace:^"
-    "@babel/preset-react": "workspace:^"
-    "@babel/preset-typescript": "workspace:^"
   languageName: unknown
   linkType: soft
 

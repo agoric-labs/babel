@@ -21,8 +21,9 @@ module.exports = function (api) {
     exclude: [
       "transform-typeof-symbol",
       // We need to enable useBuiltIns
-      "proposal-object-rest-spread",
+      // "proposal-object-rest-spread",
     ],
+    useBuiltIns: "entry",
   };
 
   // These are "safe" assumptions, that we can enable globally
@@ -56,13 +57,13 @@ module.exports = function (api) {
   let targets = {};
   let convertESM = true;
   let ignoreLib = true;
-  let includeRegeneratorRuntime = false;
+  const includeRegeneratorRuntime = false;
   let needsPolyfillsForOldNode = false;
   let dynamicESLintVersionCheck = false;
 
   let transformRuntimeOptions;
 
-  const nodeVersion = bool(process.env.BABEL_8_BREAKING) ? "14.17" : "6.9";
+  const nodeVersion = bool(process.env.BABEL_8_BREAKING) ? "14.17" : "12.14";
   // The vast majority of our src files are modules, but we use
   // unambiguous to keep things simple until we get around to renaming
   // the modules to be more easily distinguished from CommonJS
@@ -82,15 +83,15 @@ module.exports = function (api) {
   switch (env) {
     // Configs used during bundling builds.
     case "standalone":
-      includeRegeneratorRuntime = true;
+      // includeRegeneratorRuntime = true;
       convertESM = false;
       ignoreLib = false;
       // rollup-commonjs will converts node_modules to ESM
       unambiguousSources.push(
         "/**/node_modules",
         "packages/babel-preset-env/data",
-        "packages/babel-compat-data",
-        "packages/babel-runtime/regenerator"
+        "packages/babel-compat-data"
+        // "packages/babel-runtime/regenerator"
       );
       break;
     case "rollup":
@@ -164,11 +165,11 @@ module.exports = function (api) {
         "@babel/preset-typescript",
         { onlyRemoveTypeImports: true, allowDeclareFields: true },
       ],
-      ["@babel/env", envOpts],
+      // ["@babel/env", envOpts],
       ["@babel/preset-flow", { allowDeclareFields: true }],
     ],
     plugins: [
-      ["@babel/proposal-object-rest-spread", { useBuiltIns: true }],
+      // ["@babel/proposal-object-rest-spread", { useBuiltIns: true }],
 
       convertESM ? "@babel/proposal-export-namespace-from" : null,
       convertESM ? pluginImportMetaUrl : null,

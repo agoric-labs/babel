@@ -340,7 +340,7 @@ function buildRollup(packages, targetBrowsers) {
             rollupCommonJs({
               include: [
                 /node_modules/,
-                "packages/babel-runtime/regenerator/**",
+                // "packages/babel-runtime/regenerator/**",
                 "packages/babel-preset-env/data/*.js",
                 // Rollup doesn't read export maps, so it loads the cjs fallback
                 "packages/babel-compat-data/*.js",

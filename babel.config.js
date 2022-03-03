@@ -195,6 +195,7 @@ module.exports = function (api) {
       },
       {
         test: [
+          "packages/agoric-babel-generator",
           "packages/babel-generator",
           "packages/babel-plugin-proposal-decorators",
         ].map(normalize),

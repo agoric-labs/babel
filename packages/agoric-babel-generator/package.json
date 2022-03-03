@@ -1,6 +1,6 @@
 {
   "name": "@agoric/babel-generator",
-  "version": "7.17.5",
+  "version": "7.17.6",
   "description": "Turns an AST into code.",
   "author": "The Babel Team (https://babel.dev/team)",
   "license": "MIT",

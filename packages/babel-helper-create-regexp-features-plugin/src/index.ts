@@ -1,4 +1,4 @@
-import rewritePattern from "regexpu-core";
+// import rewritePattern from "regexpu-core";
 import { featuresKey, FEATURES, enableFeature, runtimeKey } from "./features";
 import { generateRegexpuOptions, canSkipRegexpu, transformFlags } from "./util";
 
@@ -66,6 +66,7 @@ export function createRegExpFeaturePlugin({
           };
         }
 
+        throw Error('regenerate has been neutered');
         node.pattern = rewritePattern(node.pattern, node.flags, regexpuOptions);
 
         if (

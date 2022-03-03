@@ -16,16 +16,5 @@
   "syntax-optional-catch-binding",
   "syntax-pipeline-operator",
   "syntax-record-and-tuple",
-  "syntax-top-level-await",
-  "proposal-dynamic-import",
-  "proposal-export-namespace-from",
-  "proposal-json-strings",
-  "proposal-logical-assignment-operators",
-  "proposal-nullish-coalescing-operator",
-  "proposal-numeric-separator",
-  "proposal-optional-chaining",
-  "proposal-private-methods",
-  "proposal-private-property-in-object",
-  "proposal-throw-expressions",
-  "proposal-unicode-property-regex"
+  "syntax-top-level-await"
 ]

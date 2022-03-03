@@ -6,7 +6,7 @@ import repl from "repl";
 import * as babel from "@babel/core";
 import vm from "vm";
 import "core-js/stable";
-import "regenerator-runtime/runtime";
+// import "regenerator-runtime/runtime";
 import register from "@babel/register";
 import { fileURLToPath } from "url";
 

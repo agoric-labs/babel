@@ -20,17 +20,6 @@ import syntaxOptionalCatchBinding from "@babel/plugin-syntax-optional-catch-bind
 import syntaxPipelineOperator from "@babel/plugin-syntax-pipeline-operator";
 import syntaxRecordAndTuple from "@babel/plugin-syntax-record-and-tuple";
 import syntaxTopLevelAwait from "@babel/plugin-syntax-top-level-await";
-import proposalDynamicImport from "@babel/plugin-proposal-dynamic-import";
-import proposalExportNamespaceFrom from "@babel/plugin-proposal-export-namespace-from";
-import proposalJsonStrings from "@babel/plugin-proposal-json-strings";
-import proposalLogicalAssignmentOperators from "@babel/plugin-proposal-logical-assignment-operators";
-import proposalNullishCoalescingOperator from "@babel/plugin-proposal-nullish-coalescing-operator";
-import proposalNumericSeparator from "@babel/plugin-proposal-numeric-separator";
-import proposalOptionalChaining from "@babel/plugin-proposal-optional-chaining";
-import proposalPrivateMethods from "@babel/plugin-proposal-private-methods";
-import proposalPrivatePropertyInObject from "@babel/plugin-proposal-private-property-in-object";
-import proposalThrowExpressions from "@babel/plugin-proposal-throw-expressions";
-import proposalUnicodePropertyRegex from "@babel/plugin-proposal-unicode-property-regex";
 export {
   syntaxAsyncGenerators,
   syntaxClassProperties,
@@ -50,17 +39,6 @@ export {
   syntaxPipelineOperator,
   syntaxRecordAndTuple,
   syntaxTopLevelAwait,
-  proposalDynamicImport,
-  proposalExportNamespaceFrom,
-  proposalJsonStrings,
-  proposalLogicalAssignmentOperators,
-  proposalNullishCoalescingOperator,
-  proposalNumericSeparator,
-  proposalOptionalChaining,
-  proposalPrivateMethods,
-  proposalPrivatePropertyInObject,
-  proposalThrowExpressions,
-  proposalUnicodePropertyRegex,
 };
 export const all: { [k: string]: any } = {
   "syntax-async-generators": syntaxAsyncGenerators,
@@ -81,15 +59,4 @@ export const all: { [k: string]: any } = {
   "syntax-pipeline-operator": syntaxPipelineOperator,
   "syntax-record-and-tuple": syntaxRecordAndTuple,
   "syntax-top-level-await": syntaxTopLevelAwait,
-  "proposal-dynamic-import": proposalDynamicImport,
-  "proposal-export-namespace-from": proposalExportNamespaceFrom,
-  "proposal-json-strings": proposalJsonStrings,
-  "proposal-logical-assignment-operators": proposalLogicalAssignmentOperators,
-  "proposal-nullish-coalescing-operator": proposalNullishCoalescingOperator,
-  "proposal-numeric-separator": proposalNumericSeparator,
-  "proposal-optional-chaining": proposalOptionalChaining,
-  "proposal-private-methods": proposalPrivateMethods,
-  "proposal-private-property-in-object": proposalPrivatePropertyInObject,
-  "proposal-throw-expressions": proposalThrowExpressions,
-  "proposal-unicode-property-regex": proposalUnicodePropertyRegex,
 };

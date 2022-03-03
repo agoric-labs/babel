@@ -5,6 +5,22 @@ __metadata:
   version: 5
   cacheKey: 8
 
+"@agoric/babel-generator@workspace:packages/agoric-babel-generator":
+  version: 0.0.0-use.local
+  resolution: "@agoric/babel-generator@workspace:packages/agoric-babel-generator"
+  dependencies:
+    "@babel/helper-fixtures": "workspace:^"
+    "@babel/parser": "workspace:^"
+    "@babel/types": "workspace:^"
+    "@jridgewell/trace-mapping": ^0.3.4
+    "@types/jsesc": ^2.5.0
+    "@types/source-map": ^0.5.0
+    charcodes: ^0.2.0
+    jsesc: "condition: BABEL_8_BREAKING ? ^3.0.2 : ^2.5.1"
+    source-map: ^0.5.0
+  languageName: unknown
+  linkType: soft
+
 "@ampproject/remapping@npm:^2.0.0, @ampproject/remapping@npm:^2.1.0":
   version: 2.1.0
   resolution: "@ampproject/remapping@npm:2.1.0"
